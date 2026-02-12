@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>For Alia 💕</title>
+
+<!-- Google Cursive Font -->
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+    body {
+        margin: 0;
+        height: 100vh;
+        background: linear-gradient(to bottom, #fff0f5, #ffe6f2);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-family: 'Cormorant Garamond', serif;
+        overflow: hidden;
+        color: #ff4da6;
+    }
+
+    /* Envelope */
+    .envelope-container {
+        position: relative;
+        width: 320px;
+        height: 220px;
+        cursor: pointer;
+    }
+
+    .envelope {
+        width: 100%;
+        height: 100%;
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 20px 40px rgba(255, 105, 180, 0.2);
+        position: relative;
+        overflow: hidden;
+        text-align: center;
+    }
+
+    .to-text {
+        position: absolute;
+        bottom: 20px;
+        width: 100%;
+        font-size: 24px;
+    }
+
+    .flap {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: #ff99cc;
+        clip-path: polygon(0 0, 50% 60%, 100% 0);
+        transform-origin: top;
+        transition: transform 0.8s ease;
+        z-index: 2;
+    }
+
+    .heart-seal {
+        position: absolute;
+        top: 90px;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 35px;
+        z-index: 3;
+        transition: opacity 0.4s ease;
+    }
+
+    /* Hidden Page */
+    .page {
+        position: absolute;
+        width: 85%;
+        height: 80%;
+        background: #fff;
+        top: 10%;
+        left: 7.5%;
+        border-radius: 8px;
+        box-shadow: 0 10px 25px rgba(255, 105, 180, 0.2);
+        transform: translateY(100%);
+        transition: transform 0.8s ease;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 22px;
+        z-index: 1;
+    }
+
+    /* Letter */
+    .letter {
+        position: absolute;
+        width: 420px;
+        background: white;
+        padding: 30px;
+        border-radius: 15px;
+        box-shadow: 0 25px 60px rgba(255, 105, 180, 0.3);
+        text-align: center;
+        transform: scale(0);
+        transition: transform 0.6s ease;
+    }
+
+    button {
+        padding: 12px 25px;
+        margin: 20px;
+        font-size: 18px;
+        border-radius: 30px;
+        border: none;
+        cursor: pointer;
+        font-family: 'Cormorant Garamond', serif;
+        font-weight: 600;
+        letter-spacing: 1px;
+        color: white;
+        transition: 0.3s ease;
+    }
+
+    #yesBtn {
+        background: #ff4da6;
+        box-shadow: 0 5px 15px rgba(255,77,166,0.4);
+    }
+
+    #yesBtn:hover {
+        transform: scale(1.1);
+    }
+
+    #noBtn {
+        background: #ff99cc;
+        position: absolute;
+    }
+
+    /* Falling emojis */
+    .falling {
+        position: absolute;
+        font-size: 25px;
+        top: -50px;
+        animation: fall linear forwards;
+        pointer-events: none;
+    }
+
+    @keyframes fall {
+        to {
+            transform: translateY(110vh);
+        }
+    }
+
+    img {
+        width: 220px;
+        margin-top: 20px;
+    }
+
+</style>
+</head>
+<body>
+
+<div class="envelope-container" onclick="openEnvelope()">
+    <div class="envelope">
+        <div class="flap" id="flap"></div>
+        <div class="heart-seal" id="seal">❤️</div>
+        <div class="page" id="page" onclick="showLetter(event)">
+            click here babes! 💕
+        </div>
+        <div class="to-text">To Alia</div>
+    </div>
+</div>
+
+<div class="letter" id="letter">
+    <h1>JANNNN...</h1>
+    <p>I know I am late asking you this but...</p>
+    <h2>Will you be my Valentine? 💕</h2>
+    <button id="yesBtn" onclick="celebrate()">YES <3</button>
+    <button id="noBtn">NO T_T</button>
+</div>
+
+<script>
+let opened = false;
+
+function openEnvelope() {
+    if(opened) return;
+    opened = true;
+
+    document.getElementById("flap").style.transform = "rotateX(180deg)";
+    document.getElementById("page").style.transform = "translateY(0)";
+    document.getElementById("seal").style.opacity = "0"; // remove heart
+}
+
+function showLetter(event) {
+    event.stopPropagation();
+    document.querySelector(".envelope-container").style.display = "none";
+    document.getElementById("letter").style.transform = "scale(1)";
+}
+
+const noBtn = document.getElementById("noBtn");
+
+noBtn.addEventListener("mouseover", function() {
+    const x = Math.random() * (window.innerWidth - 100);
+    const y = Math.random() * (window.innerHeight - 50);
+    noBtn.style.left = x + "p   x";
+    noBtn.style.top = y + "px";
+});
+
+function celebrate() {
+    document.getElementById("letter").innerHTML = `
+        <h1>YAYYYYY  I LOVE YOUUU!! ❤️❤️❤️</h1>
+        <img src="stickkiss.png">
+    `;
+
+    setInterval(createFalling, 300);
+}
+
+function createFalling(){
+    const emojis = ["🍓","🌹","🌸","💖","💐","❤️"];
+    const fall = document.createElement("div");
+    fall.classList.add("falling");
+    fall.innerHTML = emojis[Math.floor(Math.random()*emojis.length)];
+    fall.style.left = Math.random()*100 + "vw";
+    fall.style.animationDuration = (Math.random()*3 + 3) + "s";
+    document.body.appendChild(fall);
+
+    setTimeout(() => {
+        fall.remove();
+    }, 6000);
+}
+</script>
+
+</body>
+</html>
